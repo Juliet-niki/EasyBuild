@@ -14,10 +14,10 @@ const Footer: React.FC = () => {
           {/* Brand */}
           <div className="col-span-1 md:col-span-1">
             <div className="flex items-baseline gap-2 mb-4">
-              <div className="bg-primary-600  text-white flex items-center justify-center w-10 h-10 rounded-lg transition-colors duration-300">
-                <span className="material-symbols-outlined text-2xl! md:text-3xl!">
-                  foundation
-                </span>
+              <div className="bg-primary-600  text-white flex items-center justify-center p-2 rounded-lg transition-colors duration-300">
+                <p className="text-xl md:text-2xl font-bold leading-tight font-sans">
+                  EB
+                </p>
               </div>
               <h2 className="text-xl md:text-2xl font-bold tracking-tight leading-tight text-white">
                 EasyBuild<span className="text-primary-600">.ng</span>

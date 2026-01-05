@@ -1,4 +1,4 @@
-import { LucideIcon } from 'lucide-react';
+import { LucideIcon } from "lucide-react";
 
 export interface Service {
   id: string;
@@ -31,5 +31,12 @@ export interface FAQItem {
 
 export interface NavItem {
   label: string;
+  href: string;
+}
+
+export interface ContactInfo {
+  icon: LucideIcon;
+  title: string;
+  text: string;
   href: string;
 }

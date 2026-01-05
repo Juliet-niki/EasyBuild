@@ -30,14 +30,14 @@ const WhyChooseUs: React.FC = () => {
   ];
 
   return (
-    <section className="py-20 px-6 bg-slate-50">
+    <section className="py-12 sm:py-14 md:py-16 ml:py-20 px-6 bg-slate-50">
       <div className="container mx-auto max-w-7xl">
         <div className="flex flex-col lg:flex-row items-center gap-16">
           <div className="lg:w-1/2">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6 leading-tight">
+            <h2 className="text-[clamp(24px,3vw,36px)] font-bold text-slate-900 mb-4 sm:mb-5 ml:mb-6 leading-tight">
               Engineering Excellence You Can Count On
             </h2>
-            <p className="text-lg text-slate-600 mb-8 leading-relaxed">
+            <p className="text-[clamp(14px,1.8vw,18px)] text-slate-600 mb-8 leading-relaxed">
               In a complex industry, we bring clarity and precision. Our
               commitment to quality assurance and regulatory compliance ensures
               your investment is safe and structurally sound for generations.
@@ -47,7 +47,7 @@ const WhyChooseUs: React.FC = () => {
               {features.map((feature, idx) => (
                 <div key={idx} className="flex gap-4 items-start">
                   <div className="shrink-0 mt-1">
-                    <feature.icon className="w-6 h-6 text-primary-600" />
+                    <feature.icon className="w-5 h-5 md:w-6 md:h-6 text-primary-600" />
                   </div>
                   <div>
                     <h4 className="font-semibold text-slate-900">

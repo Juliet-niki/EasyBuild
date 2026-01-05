@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import SectionHeading from "./SectionHeading";
-import { Phone, Mail, MapPin, Send } from "lucide-react";
+import { Mail, MapPin, MessageCircle, Phone, Send } from "lucide-react";
+import emailjs from "@emailjs/browser";
+import { CONTACT_INFO } from "../constants";
 
 const ContactForm: React.FC = () => {
   const [formState, setFormState] = useState({
@@ -18,75 +20,81 @@ const ContactForm: React.FC = () => {
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >
   ) => {
-    setFormState({
-      ...formState,
-      [e.target.name]: e.target.value,
-    });
+    setFormState({ ...formState, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    // Mock submission
-    setTimeout(() => {
-      setIsSubmitting(false);
+
+    try {
+      // Add timestamp for {{time}} placeholder
+      const formDataWithTime = {
+        ...formState,
+        time: new Date().toLocaleString(),
+      };
+
+      await emailjs.send(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        formDataWithTime,
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+      );
+
       setSubmitted(true);
-    }, 1500);
+      setFormState({
+        name: "",
+        email: "",
+        phone: "",
+        service: "",
+        message: "",
+      });
+    } catch (err) {
+      console.error(err);
+      alert("Something went wrong. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
-    <section id="contact" className="py-20 px-6 bg-slate-900 text-white">
+    <section
+      id="contact"
+      className="py-14 md:py-16 px-6 bg-slate-900 text-white"
+    >
       <div className="container mx-auto max-w-7xl">
         <SectionHeading
           title="Get a Free Quote"
           subtitle="Ready to start your project? Contact us today for a consultation or estimate."
-          light={true}
+          light
         />
 
         <div className="flex flex-col lg:flex-row gap-12 mt-12">
           {/* Contact Info */}
           <div className="lg:w-1/3 space-y-8">
             <div className="bg-slate-800 p-8 rounded-2xl border border-slate-700">
-              <h3 className="text-xl font-bold mb-6 text-white">
+              <h3 className="text-[clamp(18px,1.8vw,20px)] font-bold mb-6 text-white">
                 Contact Information
               </h3>
 
               <div className="space-y-6">
-                <div className="flex items-start gap-4">
-                  <div className="bg-primary-900 p-3 rounded-lg text-primary-400">
-                    <Phone size={20} />
+                {CONTACT_INFO.map((info, index) => (
+                  <div key={index} className="flex items-start gap-4">
+                    <div className="bg-primary-900 p-3 rounded-lg text-primary-400">
+                      <info.icon strokeWidth={1.5} size={20} />
+                    </div>
+                    <a
+                      href={info.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <p className="text-slate-400 text-sm mb-1">
+                        {info.title}
+                      </p>
+                      <p className="font-semibold text-base">{info.text}</p>
+                    </a>
                   </div>
-                  <div>
-                    <p className="text-slate-400 text-sm mb-1">Call Us</p>
-                    <p className="font-semibold text-lg">+1 (555) 123-4567</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4">
-                  <div className="bg-primary-900 p-3 rounded-lg text-primary-400">
-                    <Mail size={20} />
-                  </div>
-                  <div>
-                    <p className="text-slate-400 text-sm mb-1">Email Us</p>
-                    <p className="font-semibold text-lg">
-                      contact@easyBuild.com
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4">
-                  <div className="bg-primary-900 p-3 rounded-lg text-primary-400">
-                    <MapPin size={20} />
-                  </div>
-                  <div>
-                    <p className="text-slate-400 text-sm mb-1">Visit Office</p>
-                    <p className="font-semibold text-lg">
-                      123 Engineering Blvd,
-                      <br />
-                      Construct City, ST 90210
-                    </p>
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
           </div>
@@ -111,16 +119,7 @@ const ContactForm: React.FC = () => {
                   </p>
                   <button
                     type="button"
-                    onClick={() => {
-                      setSubmitted(false);
-                      setFormState({
-                        name: "",
-                        email: "",
-                        phone: "",
-                        service: "",
-                        message: "",
-                      });
-                    }}
+                    onClick={() => setSubmitted(false)}
                     className="mt-6 text-primary-600 font-semibold hover:underline"
                   >
                     Send another message
@@ -128,118 +127,63 @@ const ContactForm: React.FC = () => {
                 </div>
               ) : (
                 <>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                    <div>
-                      <label
-                        htmlFor="name"
-                        className="block text-sm font-medium text-slate-700 mb-2"
-                      >
-                        Full Name
-                      </label>
-                      <input
-                        required
-                        type="text"
-                        id="name"
-                        name="name"
-                        value={formState.name}
-                        onChange={handleChange}
-                        className="w-full px-4 py-3 rounded-lg border border-slate-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all"
-                        placeholder="John Doe"
-                      />
-                    </div>
-                    <div>
-                      <label
-                        htmlFor="phone"
-                        className="block text-sm font-medium text-slate-700 mb-2"
-                      >
-                        Phone Number
-                      </label>
-                      <input
-                        required
-                        type="tel"
-                        id="phone"
-                        name="phone"
-                        value={formState.phone}
-                        onChange={handleChange}
-                        className="w-full px-4 py-3 rounded-lg border border-slate-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all"
-                        placeholder="(555) 000-0000"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                    <div>
-                      <label
-                        htmlFor="email"
-                        className="block text-sm font-medium text-slate-700 mb-2"
-                      >
-                        Email Address
-                      </label>
-                      <input
-                        required
-                        type="email"
-                        id="email"
-                        name="email"
-                        value={formState.email}
-                        onChange={handleChange}
-                        className="w-full px-4 py-3 rounded-lg border border-slate-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all"
-                        placeholder="john@example.com"
-                      />
-                    </div>
-                    <div>
-                      <label
-                        htmlFor="service"
-                        className="block text-sm font-medium text-slate-700 mb-2"
-                      >
-                        Service Interested In
-                      </label>
-                      <select
-                        id="service"
-                        name="service"
-                        value={formState.service}
-                        onChange={handleChange}
-                        className="w-full px-4 py-3 rounded-lg border border-slate-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all bg-white"
-                      >
-                        <option value="">Select a service...</option>
-                        <option value="Design">Building Design</option>
-                        <option value="Estimate">Building Estimate</option>
-                        <option value="Survey">Land Survey</option>
-                        <option value="Verification">
-                          Property Verification
-                        </option>
-                        <option value="Construction">Construction</option>
-                        <option value="Other">Other</option>
-                      </select>
-                    </div>
-                  </div>
-
-                  <div className="mb-6">
-                    <label
-                      htmlFor="message"
-                      className="block text-sm font-medium text-slate-700 mb-2"
-                    >
-                      Project Details
-                    </label>
-                    <textarea
-                      required
-                      id="message"
-                      name="message"
-                      rows={4}
-                      value={formState.message}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 rounded-lg border border-slate-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all resize-none"
-                      placeholder="Tell us about your project location, size, and requirements..."
-                    ></textarea>
-                  </div>
-
+                  <input
+                    type="text"
+                    name="name"
+                    placeholder="Full Name"
+                    value={formState.name}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-4 py-3 mb-4 rounded-lg border border-slate-200"
+                  />
+                  <input
+                    type="email"
+                    name="email"
+                    placeholder="Email"
+                    value={formState.email}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-4 py-3 mb-4 rounded-lg border border-slate-200"
+                  />
+                  <input
+                    type="tel"
+                    name="phone"
+                    placeholder="Phone"
+                    value={formState.phone}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-4 py-3 mb-4 rounded-lg border border-slate-200"
+                  />
+                  <select
+                    name="service"
+                    value={formState.service}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-4 py-3 mb-4 rounded-lg border border-slate-200"
+                  >
+                    <option value="">Select a service...</option>
+                    <option value="Building Design">Building Design</option>
+                    <option value="Building Estimate">Building Estimate</option>
+                    <option value="Land Survey">Land Survey</option>
+                    <option value="Property Verification">
+                      Property Verification
+                    </option>
+                    <option value="Construction">Construction</option>
+                    <option value="Other">Other</option>
+                  </select>
+                  <textarea
+                    name="message"
+                    rows={4}
+                    placeholder="Project Details..."
+                    value={formState.message}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-4 py-3 mb-4 rounded-lg border border-slate-200"
+                  />
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className={`w-full py-4 px-6 rounded-lg font-bold text-white transition-all transform ${
-                      isSubmitting
-                        ? "bg-slate-400 cursor-not-allowed"
-                        : "bg-primary-600 hover:bg-primary-700 hover:shadow-lg active:scale-[0.99]"
-                    }`}
+                    className="w-full py-4 px-6 rounded-lg font-bold text-white bg-primary-600 hover:bg-primary-700"
                   >
                     {isSubmitting ? "Sending Request..." : "Submit Request"}
                   </button>

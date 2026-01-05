@@ -5,7 +5,7 @@ import { Star, Quote } from "lucide-react";
 
 const Testimonials: React.FC = () => {
   return (
-    <section className="py-20 px-6 bg-white border-t border-slate-100">
+    <section className="py-14 md:py-16 ml:py-20 px-6 bg-white border-t border-slate-100">
       <div className="container mx-auto max-w-7xl">
         <SectionHeading
           title="What Our Clients Say"
@@ -18,10 +18,7 @@ const Testimonials: React.FC = () => {
               key={testimonial.id}
               className="bg-slate-50 p-8 rounded-2xl relative"
             >
-              <Quote
-                className="absolute top-6 right-6 text-slate-200 fill-slate-200"
-                size={48}
-              />
+              <Quote className="absolute top-6 right-6 text-slate-200 fill-slate-200 w-8 h-8 md:w-12 md:h-12" />
 
               <div className="flex gap-1 mb-6">
                 {[...Array(5)].map((_, i) => (
@@ -37,7 +34,7 @@ const Testimonials: React.FC = () => {
                 ))}
               </div>
 
-              <p className="text-slate-700 mb-6 italic relative z-10">
+              <p className="text-slate-700 mb-6 italic relative z-10 text-[clamp(13px,1.8vw,16px)]">
                 "{testimonial.content}"
               </p>
 

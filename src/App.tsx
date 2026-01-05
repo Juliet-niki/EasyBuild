@@ -37,15 +37,15 @@ const App: React.FC = () => {
         <div className=" w-full px-6 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div
-              className={`flex items-center justify-center w-10 h-10 rounded-lg transition-colors duration-300 ${
+              className={`flex items-center justify-center p-2 rounded-lg transition-colors duration-300 ${
                 isScrolled
                   ? "bg-primary-600/10 text-primary-600"
                   : "bg-primary-500 text-white"
               }`}
             >
-              <span className="material-symbols-outlined text-2xl! md:text-3xl!">
-                foundation
-              </span>
+              <p className="text-xl md:text-2xl font-bold leading-tight font-sans">
+                EB
+              </p>
             </div>
             <div className="flex flex-col -space-y-0.5">
               <h2

@@ -7,8 +7,19 @@ import {
   Hammer,
   ShieldCheck,
   Briefcase,
+  Mail,
+  MapPin,
+  MessageCircle,
+  Phone,
 } from "lucide-react";
-import { Service, Project, Testimonial, FAQItem, NavItem } from "./types";
+import {
+  Service,
+  Project,
+  Testimonial,
+  FAQItem,
+  NavItem,
+  ContactInfo,
+} from "./types";
 
 export const NAV_ITEMS: NavItem[] = [
   { label: "Services", href: "#services" },
@@ -82,9 +93,9 @@ export const PROJECTS: Project[] = [
     id: "p1",
     title: "Azure Heights Residence",
     category: "Residential Construction",
-    image: "https://picsum.photos/id/122/800/600",
+    image: "/images/project1.jpg",
     description:
-      "A G+2 modern residential villa with sustainable structural design.",
+      "A G+1 modern residential villa with sustainable structural design.",
   },
   {
     id: "p2",
@@ -163,5 +174,32 @@ export const FAQS: FAQItem[] = [
     question: "Can you work with my existing architect?",
     answer:
       "Absolutely. We often collaborate with external architects to provide structural engineering, estimation, and execution support.",
+  },
+];
+
+export const CONTACT_INFO: ContactInfo[] = [
+  {
+    icon: Phone,
+    title: "Call Us",
+    text: "+234 814 848 3418",
+    href: "tel:+2348148483418",
+  },
+  {
+    icon: MessageCircle,
+    title: "Chat on WhatsApp",
+    text: "+234 814 848 3418",
+    href: "https://wa.me/+2348148483418?text=Hello%20there!",
+  },
+  {
+    icon: Mail,
+    title: "Email Us",
+    text: "contact@easyBuild.com",
+    href: "mailto:contact@easyBuild.com",
+  },
+  {
+    icon: MapPin,
+    title: "Visit Office",
+    text: "53 Ekwema Cres, Ikenegbu, Owerri 460242, Imo State",
+    href: "https://www.google.com/maps/place/Chicken+Republic+-+Ikenegbu,+Owerri/@5.4927666,7.0405777,18z/data=!3m1!4b1!4m6!3m5!1s0x104259d4e549a807:0xe6a871d588f98dc4!8m2!3d5.4927666!4d7.041273!16s%2Fg%2F11nxpk92xp?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D",
   },
 ];
