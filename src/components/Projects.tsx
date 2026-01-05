@@ -27,7 +27,7 @@ const Projects: React.FC = () => {
               </div>
 
               {/* Overlay Content */}
-              <div className="absolute inset-0 bg-linear-to-t from-slate-900/90 via-slate-900/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-8">
+              <div className="hidden md:flex absolute inset-0 bg-linear-to-t from-slate-900/90 via-slate-900/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300  flex-col justify-end p-8">
                 <span className="text-primary-400 font-medium text-sm mb-2 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 delay-75">
                   {project.category}
                 </span>
@@ -40,13 +40,16 @@ const Projects: React.FC = () => {
               </div>
 
               {/* Static Label for Mobile (always visible if touch, but we'll stick to hover for clean design on desktop) */}
-              <div className="absolute bottom-0 left-0 right-0 p-6 bg-white md:hidden">
+              <div className="p-3 bg-white md:hidden">
                 <span className="text-primary-600 text-xs font-bold uppercase">
                   {project.category}
                 </span>
-                <h3 className="text-lg font-bold text-slate-900">
+                <h3 className="text-base font-bold text-slate-900">
                   {project.title}
                 </h3>
+                <p className="text-slate-600 text-[13px]">
+                  {project.description}
+                </p>
               </div>
             </div>
           ))}
